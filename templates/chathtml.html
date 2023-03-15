@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+@import url("https://fonts.googleapis.com/css?family=Raleway|Ubuntu&display=swap");
+body {
+    background: #E8EBF5;
+    padding: 0;
+    margin: 0;
+    font-family: Raleway;
+}
+.chat-box {
+    width: 25%;
+    margin: 5% auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    z-index: 15;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.005);
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-radius: 15px;
+}
+
+.chat-box-header {
+        height: 8%; 
+		width: 100%;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        display: flex;
+        font-size: 14px;
+        padding: 0.5em 0;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2),
+            0 -1px 10px rgba(172, 54, 195, 0.3);
+        box-shadow: 0 1px 10px rgba(0, 0, 0, 0.025);
+
+    }
+.chat-box-header h3 {
+            font-family: ubuntu;
+            font-weight: 400;
+            position: relative;
+			margin: 0 auto;
+            left: 25px;
+        }
+.chat-box-header p {
+            float: right;
+            position: absolute;
+            right: 16px;
+            cursor: pointer;
+            height: 50px;
+            width: 50px;
+            text-align: center;
+            line-height: 3.25;
+            margin: 0;
+        }	
+	
+.chat-box-body-receive-narration {
+            width: 90%;
+			float: right;
+            background: green;
+			color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.015);
+            margin-bottom: 14px;
+        }
+		
+.chat-box-body-receive-narration p {
+                margin: 0;
+                color: white;
+                font-size: 14px;
+                margin-bottom: 0.25rem;
+            }
+.chat-box-body-receive-narration span {
+                float: right;
+                color: white;
+                font-size: 10px;
+            }
+			
+.chat-box-body-receive-speech {
+            width: 52%;
+            float: left;
+            background: #E9E9E9;
+            padding: 10px 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.015);
+            margin-bottom: 14px;
+
+        }
+.chat-box-body-receive-speech p {
+                margin: 0;
+                color: #777;
+                font-size: 14px;
+                margin-bottom: 0.25rem;
+            }
+.chat-box-body-receive-speach span {
+                float: right;
+                color: #777;
+                font-size: 10px;
+            }
+
+.chat-box-footer {
+        position: relative;
+        display: flex;
+
+
+
+}
+
+.chat-box-footer button {
+            border: none;
+            padding: 16px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+
+        }
+.chat-box-footer-send {
+            vertical-align: middle;
+            align-items: center;
+            justify-content: center;
+            transform: translate(0px, 20px);
+            cursor: pointer;
+        }
+
+.chat-box-footer input {
+            padding: 10px;
+            border: none;
+            -webkit-appearance: none;
+            border-radius: 50px;
+            background: whitesmoke;
+            margin: 5px auto;
+            font-family: ubuntu;
+            font-weight: 600;
+            color: #444;
+            width: 70%;
+            }
+        
+		
+		
+.chat-box-body{
+        max-height: 700px;
+        background: #f8f8f8;
+        overflow-y: scroll;
+        padding: 12px;
+
+    }
+	
+
+.chat-box-body-send {
+            width: 52%;
+            float: right;
+			color: white;
+            background: #2854E8;
+            padding: 10px 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.015);
+            margin-bottom: 14px;
+
+
+        }	
+		
+.chat-box-body-send p {
+                margin: 0;
+                color: white;
+                font-size: 14px;
+                margin-bottom: 0.25rem;
+            }
+			
+.chat-box-body-send span {
+                float: right;
+                color: #777;
+                font-size: 10px;
+            }		
+			
+.chat-button {
+    padding: 25px 16px;
+    background: #2C50EF;
+    width: 120px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 15px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    box-shadow: 0 2px 15px rgba(#2C50EF, 0.21);
+    cursor: pointer;
+
+}
+
+	
+</style>
+<script>
+
+function record_message(){
+	inp_node = document.getElementById(id="message_input")
+	message = inp_node.value
+	inp_node.value = ""
+	d = document.createElement("div")
+	p = document.createElement("p")
+	p.innerHTML = message
+	d.appendChild(p)
+	d.setAttribute("class", "chat-box-body-send")
+	node = document.getElementById("chatbox")
+	node.appendChild(d)
+	window.setTimeout(function() {
+	  	node = document.getElementById("chatbox");
+		node.scrollTop = node.scrollHeight;
+	}, 200);
+}
+
+function create_speech(text)
+{
+	d = document.createElement("div")
+	p = document.createElement("p")
+	p.innerHTML = text
+	d.appendChild(p)
+	d.setAttribute("class", "chat-box-body-receive-speech")
+	node = document.getElementById("chatbox")
+	node.appendChild(d)
+
+}
+
+function create_narration(text)
+{
+	d = document.createElement("div")
+	p = document.createElement("p")
+	p.innerHTML = text
+	d.appendChild(p)
+	d.setAttribute("class", "chat-box-body-receive-narration")
+	node = document.getElementById("chatbox")
+	node.appendChild(d)
+
+}
+function process_result(result){
+
+	d = document.createElement("div")
+	p = document.createElement("p")
+	for (let r of result.reply) {
+		console.log(r)
+		console.log("thisis the substing", r.substring(2))
+	  if (r.substring(0, 2) == "S:") {
+		create_speech(r.substring(2));
+	  }
+	  if (r.substring(0,2) == "N:") {
+		create_narration(r.substring(2));
+	  }
+	}
+
+	window.setTimeout(function() {
+	  	node = document.getElementById("chatbox");
+		node.scrollTop = node.scrollHeight;
+	}, 500);
+
+
+}
+function foo(e){
+
+	if (e.keyCode == 13)
+	{
+		inp_node = document.getElementById(id="message_input")
+		message = inp_node.value
+		record_message()
+		$.ajax({
+		  type: "POST",
+		  url: "/process_qtc",
+		  data: JSON.stringify(message),
+		  contentType: "application/json",
+		  dataType: 'json',
+		  success: function(result) {
+			console.log("Result:");
+			console.log(result);
+			process_result(result)
+		  } 
+		});
+
+	}
+}
+window.addEventListener('load', function () {
+  document.getElementById("message_input").onkeyup = foo 
+})
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+</head>
+<body>
+  <div class="chat-box">
+    <div class="chat-box-header">
+      <h3>Call me AL</h3>
+    </div>
+
+    <div class="chat-box-body" id="chatbox">
+
+
+    </div>
+
+    <div class="chat-box-footer">
+		<input id="message_input" placeholder="Enter Your Message" type="text" autocomplete="off"/>
+    </div>
+  </div>
+
+</body>
+</html>
